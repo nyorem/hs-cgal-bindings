@@ -1,0 +1,26 @@
+name:                hs-cgal-bindings
+version:             0.1.0
+build-type:          Simple
+cabal-version:       >= 1.10
+
+library
+  ghc-options:         -Wall -O2 -pgml g++
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  exposed-modules:     CGAL
+  c-sources:           cbits/cgal_prelude.cpp
+  other-extensions:    CPP,
+                       ForeignFunctionInterface
+  build-depends:       base >=4.9 && <5.0
+  build-tools:         hsc2hs
+  cc-options:          -fPIC
+  include-dirs:        cbits,
+                       CGAL_DIR/include
+  extra-lib-dirs:      CGAL_DIR/lib
+  extra-libraries:     stdc++, CGAL_Core, CGAL
+
+executable hs-cgal
+  ghc-options:         -Wall -O2
+  default-language:    Haskell2010
+  build-depends:       base >= 4.9 && <5.0, hs-cgal-bindings>= 0.1.0
+  main-is:             Main.hs

@@ -16,7 +16,7 @@ data Point2 = Point2 { x :: Float , y :: Float } deriving (Show)
 instance Storable Point2 where
     sizeOf _ = #{size vec2}
 
-    alignment _ = alignment (undefined :: CInt)
+    alignment _ = alignment (undefined :: Float)
 
     poke p vec2 = do
         #{poke vec2, x} p $ x vec2
@@ -32,10 +32,9 @@ groupByN n xs
 
 delaunay_2 :: [Point2] -> [(Int, Int, Int)]
 delaunay_2 ps = unsafePerformIO $ do
-    let n_points = fromIntegral (length ps) :: CInt
     (final_ptr_tri, final_ptr_n_triangles) <- withArray ps $ \ps_ptr -> do
         (ptr_tri, ptr_n_triangles) <- alloca $ \n_tri_ptr -> do
-            c_tri <- internal_delaunay_2 ps_ptr n_points n_tri_ptr
+            c_tri <- internal_delaunay_2 ps_ptr (fromIntegral $ length ps) n_tri_ptr
             return (c_tri, n_tri_ptr)
         return (ptr_tri, ptr_n_triangles)
     n_tri <- peek final_ptr_n_triangles

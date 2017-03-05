@@ -1,5 +1,12 @@
 name:                hs-cgal-bindings
 version:             0.1.0
+-- synopsis:            
+-- description:         
+license:             MIT
+license-file:        LICENSE
+author:              Jocelyn MEYRON
+maintainer:          Jocelyn.Meyron@grenoble-inp.org
+category:            Math
 build-type:          Simple
 cabal-version:       >= 1.10
 
@@ -22,5 +29,9 @@ library
 executable hs-cgal
   ghc-options:         -Wall -O2
   default-language:    Haskell2010
-  build-depends:       base >= 4.9 && <5.0, hs-cgal-bindings>= 0.1.0
+  build-depends:       base >= 4.9 && < 5.0,
+                       hs-cgal-bindings>= 0.1.0,
+                       gloss >= 1.10.2.5,
+                       vector >= 0.11.0.0,
+                       random >= 1.1
   main-is:             Main.hs

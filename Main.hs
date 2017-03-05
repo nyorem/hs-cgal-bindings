@@ -70,9 +70,8 @@ drawTriangle a b c =
         where pointToTuple (Point2 x y) = (x, y)
 
 handleInput :: Event -> World -> World
-handleInput (EventKey (Char 't') Down _ _) w@(World ps t g)
-  | null t    = World ps (delaunay_2 ps) g
-    | otherwise = w
+handleInput (EventKey (Char 'c') Down _ _) (World ps t g) = initialWorld { gen = g }
+handleInput (EventKey (Char 't') Down _ _) (World ps t g) = World ps (delaunay_2 ps) g
 handleInput (EventKey (Char 'r') Down _ _) (World ps t g) = World (ps ++ newPs) t g'
     where (newPs, g') = randomInBox g (-sizeBox) (sizeBox) (-sizeBox) (sizeBox) 100
 handleInput _ w = w
